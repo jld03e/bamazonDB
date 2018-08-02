@@ -1,0 +1,23 @@
+{
+  "name": "bamazondb",
+  "version": "1.0.0",
+  "description": "database that holds products for sale and keeps count of inventory",
+  "main": "bamazonDB.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jld03e/bamazonDB.git"
+  },
+  "author": "Jose De Las Salas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jld03e/bamazonDB/issues"
+  },
+  "homepage": "https://github.com/jld03e/bamazonDB#readme",
+  "dependencies": {
+    "inquirer": "^6.0.0",
+    "mysql": "^2.16.0"
+  }
+}
