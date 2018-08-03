@@ -32,7 +32,6 @@ function runProductGuide() {
     ]
   })
   .then(function(answer) {
-    console.log(answer);
     switch(answer.action) {
       case "View Product List":
       productSearch();
@@ -68,13 +67,11 @@ function productSearch () {
 
 function buyUnits() {
   connection.query("SELECT * FROM products", function(err, results){
-    console.log(results);
     if (err) throw err;
       var choiceArray = [];
       for (var i=0; i<results.length; i++) {
         choiceArray.push(results[i].item_id);
       }
-      console.log(choiceArray);
     inquirer
     .prompt([
       {
@@ -89,12 +86,13 @@ function buyUnits() {
       }
     ])
     .then(function(answer) {
+      var chosenItem;
       for (var j = 0; j < results.length; j++) {
-        if (parseInt(results[j].item_id) === parseInt(answer.choice))
-        console.log(results[j]);
-        var remainder = parseInt(results[j].stock_quantity) - parseInt(answer.units);
-        console.log(remainder);
+        if (parseInt(results[j].item_id) === parseInt(answer.choice)){
+        chosenItem = results[j];
+        var remainder = parseInt(chosenItem.stock_quantity) - parseInt(answer.units);
       }
+    }
       
       //determine if there are any quantities left:
       if (parseInt(remainder) > 0) {
@@ -105,12 +103,13 @@ function buyUnits() {
               stock_quantity: remainder
             },
             {
-              item_id: results[j].item_id
+              item_id: chosenItem.item_id
             }
           ],
           function(error) {
             if (error) throw err;
-            console.log("ENJOY YOUR PURCHASE!");
+            console.log("We have " + remainder + " left. ENJOY YOUR PURCHASE!");
+            console.log("Price of Purchase: " + parseInt(answer.units) * parseInt(chosenItem.price))
             runProductGuide();
           }
         );
